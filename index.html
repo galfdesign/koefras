@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Калькулятор гидравлического сопротивления</title>
+    <title>Калькулятор аккумуляции тепла</title>
     <style>
         :root {
             --main-color: #2c7be5;
@@ -12,13 +12,7 @@
             --bg-color: #f9fbfd;
             --input-bg: #ffffff;
         }
-        
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
@@ -27,13 +21,11 @@
             padding: 0;
             margin: 0;
         }
-        
         .container {
             max-width: 500px;
             margin: 0 auto;
             padding: 15px;
         }
-        
         .calculator {
             background-color: white;
             border-radius: 10px;
@@ -41,7 +33,6 @@
             overflow: hidden;
             margin-bottom: 20px;
         }
-        
         .calculator-header {
             background-color: var(--main-color);
             color: white;
@@ -49,15 +40,12 @@
             font-size: 18px;
             font-weight: 600;
         }
-        
         .calculator-body {
             padding: 20px;
         }
-        
         .input-group {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
-        
         .input-group label {
             display: block;
             margin-bottom: 8px;
@@ -65,8 +53,7 @@
             font-weight: 500;
             color: var(--text-color);
         }
-        
-        .input-group input, 
+        .input-group input,
         .input-group select {
             width: 100%;
             padding: 12px 15px;
@@ -76,21 +63,24 @@
             background-color: var(--input-bg);
             transition: border-color 0.2s;
         }
-        
-        .input-group input:focus, 
+        .input-group input:focus,
         .input-group select:focus {
             outline: none;
             border-color: var(--main-color);
             box-shadow: 0 0 0 3px rgba(44, 123, 229, 0.1);
         }
-        
+        .section-title {
+            font-weight: 600;
+            color: var(--main-color);
+            margin: 22px 0 10px 0;
+            font-size: 17px;
+        }
         .results {
             background-color: var(--bg-color);
             border-radius: 8px;
             padding: 15px;
             margin-top: 10px;
         }
-        
         .result-item {
             display: flex;
             justify-content: space-between;
@@ -98,80 +88,32 @@
             padding: 10px 0;
             border-bottom: 1px solid var(--border-color);
         }
-        
         .result-item:last-child {
             border-bottom: none;
         }
-        
         .result-label {
             font-size: 14px;
             color: #6e84a3;
         }
-        
         .result-value {
             font-size: 16px;
             font-weight: 600;
             color: var(--main-color);
         }
-        
-        .unit-selector {
-            display: flex;
-            gap: 10px;
+        .result-final {
+            font-size: 17px;
+            font-weight: 700;
+            color: #ee4d36;
+            margin-top: 18px;
+            text-align: center;
         }
-        
-        .unit-selector input {
-            flex: 2;
-        }
-        
-        .unit-selector select {
-            flex: 1;
-        }
-        
-        .fluid-properties {
-            background-color: var(--bg-color);
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-        
-        .fluid-property {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-        }
-        
-        .fluid-property:last-child {
-            margin-bottom: 0;
-        }
-        
-        .fluid-property-label {
-            color: #6e84a3;
-        }
-        
-        .fluid-property-value {
-            font-weight: 500;
-        }
-        
         @media (max-width: 480px) {
-            .container {
-                padding: 10px;
-            }
-            
-            .calculator-header {
-                padding: 12px 15px;
-                font-size: 16px;
-            }
-            
-            .calculator-body {
-                padding: 15px;
-            }
-            
-            .input-group input, 
-            .input-group select {
-                padding: 10px 12px;
-                font-size: 14px;
-            }
+            .container { padding: 7px; }
+            .calculator-header { padding: 12px 15px; font-size: 16px; }
+            .calculator-body { padding: 10px; }
+            .input-group input,
+            .input-group select { padding: 10px 12px; font-size: 14px; }
+            .section-title { font-size: 15px; }
         }
     </style>
 </head>
@@ -179,283 +121,288 @@
     <div class="container">
         <div class="calculator">
             <div class="calculator-header">
-                Калькулятор гидравлического сопротивления
+                Калькулятор тепловой аккумуляции ограждений
             </div>
             <div class="calculator-body">
+                <div class="section-title">Стены</div>
                 <div class="input-group">
-                    <label for="pipe-material">Материал трубопровода</label>
-                    <select id="pipe-material">
-                        <option value="ppr">Полипропилен (PPR)</option>
-                        <option value="copper">Медь</option>
-                        <option value="stainless">Нержавеющая сталь</option>
-                        <option value="metalplastic">Металлопластик</option>
-                        <option value="pex">Сшитый полиэтилен (PEX)</option>
+                    <label for="material">Материал стены</label>
+                    <select id="material">
+                        <option value="gazobeton">Газобетон</option>
+                        <option value="kirpich">Кирпич</option>
+                        <option value="derevo">Дерево</option>
+                        <option value="karkas">Каркасная стена с утеплителем</option>
                     </select>
                 </div>
-                
-                <div class="input-group">
-                    <label for="fluid">Жидкость</label>
-                    <select id="fluid">
-                        <option value="water">Вода</option>
-                        <option value="glycol30">30% этиленгликоль</option>
-                        <option value="glycol50">50% этиленгликоль</option>
+                <div class="input-group" id="frameThicknessGroup" style="display:none">
+                    <label for="frameThicknessSelect">Толщина утеплителя (каркас)</label>
+                    <select id="frameThicknessSelect">
+                        <option value="0.05">50 мм</option>
+                        <option value="0.10">100 мм</option>
+                        <option value="0.15">150 мм</option>
                     </select>
                 </div>
-                
                 <div class="input-group">
-                    <label for="temperature">Температура жидкости, °C</label>
-                    <input type="number" id="temperature" value="20" min="0" max="100" step="1">
+                    <label for="density">Плотность, кг/м³</label>
+                    <input type="number" id="density" value="600" min="1">
                 </div>
-                
-                <div class="fluid-properties">
-                    <div class="fluid-property">
-                        <span class="fluid-property-label">Плотность:</span>
-                        <span id="density-display" class="fluid-property-value">998.2 кг/м³</span>
+                <div class="input-group">
+                    <label for="heatCapacity">Удельная теплоёмкость, Дж/(кг·°C)</label>
+                    <input type="number" id="heatCapacity" value="1000" min="1">
+                </div>
+                <div class="input-group">
+                    <label for="thickness">Толщина конструкции, м</label>
+                    <input type="number" id="thickness" value="0.30" step="0.01" min="0.01">
+                </div>
+                <div class="input-group">
+                    <label for="conductivity">Теплопроводность, Вт/(м·°C)</label>
+                    <input type="number" id="conductivity" value="0.12" step="0.01" min="0.01">
+                </div>
+                <div class="input-group">
+                    <label for="glazing">Площадь остекления</label>
+                    <select id="glazing">
+                        <option value="1">Малое (10%)</option>
+                        <option value="0.8">Среднее (30%)</option>
+                        <option value="0.6">Большое (50%)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="areaWall">Площадь стен, м²</label>
+                    <input type="number" id="areaWall" value="60" min="1">
+                </div>
+                <div class="input-group" style="margin-top:-7px; margin-bottom:15px">
+                    <span id="ref" style="color:#6e84a3;font-size:13px"></span>
+                </div>
+                <div class="section-title">Бетонная плита</div>
+                <div class="row" style="gap:12px">
+                    <div class="input-group" style="flex:1;">
+                        <label for="slabDensity">Плотность, кг/м³</label>
+                        <input type="number" id="slabDensity" value="2400" min="1">
                     </div>
-                    <div class="fluid-property">
-                        <span class="fluid-property-label">Кинематическая вязкость:</span>
-                        <span id="viscosity-display" class="fluid-property-value">1.004e-6 м²/с</span>
+                    <div class="input-group" style="flex:1;">
+                        <label for="slabHeatCapacity">Уд. теплоёмкость, Дж/(кг·°C)</label>
+                        <input type="number" id="slabHeatCapacity" value="880" min="1">
                     </div>
                 </div>
-                
-                <div class="input-group">
-                    <label>Расход жидкости</label>
-                    <div class="unit-selector">
-                        <input type="number" id="flow-rate" step="0.001" min="0" value="10" placeholder="Введите расход">
-                        <select id="flow-unit">
-                            <option value="m3h">м³/час</option>
-                            <option value="lmin">л/мин</option>
-                            <option value="m3s">м³/с</option>
-                        </select>
+                <div class="row" style="gap:12px">
+                    <div class="input-group" style="flex:1;">
+                        <label for="slabThickness">Толщина, м</label>
+                        <input type="number" id="slabThickness" value="0.20" step="0.01" min="0.01">
+                    </div>
+                    <div class="input-group" style="flex:1;">
+                        <label for="slabConductivity">Теплопроводность, Вт/(м·°C)</label>
+                        <input type="number" id="slabConductivity" value="1.7" step="0.01" min="0.01">
                     </div>
                 </div>
-                
                 <div class="input-group">
-                    <label for="diameter">Внутренний диаметр трубопровода, мм</label>
-                    <input type="number" id="diameter" step="0.1" min="0" value="50" placeholder="Введите диаметр">
+                    <label for="areaSlab">Площадь плиты, м²</label>
+                    <input type="number" id="areaSlab" value="40" min="1">
                 </div>
-                
+                <div class="section-title">Кровля с утеплителем</div>
                 <div class="input-group">
-                    <label for="length">Длина трубопровода, м</label>
-                    <input type="number" id="length" step="0.1" min="0" value="100" placeholder="Введите длину">
+                    <label for="roofThicknessSelect">Толщина утеплителя</label>
+                    <select id="roofThicknessSelect">
+                        <option value="0.05">50 мм</option>
+                        <option value="0.10">100 мм</option>
+                    </select>
                 </div>
-                
+                <div class="row" style="gap:12px">
+                    <div class="input-group" style="flex:1;">
+                        <label for="roofDensity">Плотность, кг/м³</label>
+                        <input type="number" id="roofDensity" value="40" min="1">
+                    </div>
+                    <div class="input-group" style="flex:1;">
+                        <label for="roofHeatCapacity">Уд. теплоёмкость, Дж/(кг·°C)</label>
+                        <input type="number" id="roofHeatCapacity" value="850" min="1">
+                    </div>
+                </div>
+                <div class="row" style="gap:12px">
+                    <div class="input-group" style="flex:1;">
+                        <label for="roofConductivity">Теплопроводность, Вт/(м·°C)</label>
+                        <input type="number" id="roofConductivity" value="0.037" step="0.001" min="0.001">
+                    </div>
+                    <div class="input-group" style="flex:1;">
+                        <label for="roofThickness">Толщина, м</label>
+                        <input type="number" id="roofThickness" value="0.05" step="0.01" min="0.01">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="areaRoof">Площадь кровли, м²</label>
+                    <input type="number" id="areaRoof" value="60" min="1">
+                </div>
+
                 <div class="results">
                     <div class="result-item">
-                        <span class="result-label">Скорость потока (V)</span>
-                        <span id="velocity-result" class="result-value">-</span>
+                        <span class="result-label">β стены</span>
+                        <span id="betaWall" class="result-value">-</span>
                     </div>
                     <div class="result-item">
-                        <span class="result-label">Число Рейнольдса (Re)</span>
-                        <span id="reynolds-result" class="result-value">-</span>
+                        <span class="result-label">β бетонной плиты</span>
+                        <span id="betaSlab" class="result-value">-</span>
                     </div>
                     <div class="result-item">
-                        <span class="result-label">Коэффициент трения (λ)</span>
-                        <span id="friction-result" class="result-value">-</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Потери напора (h<sub>f</sub>)</span>
-                        <span id="headloss-result" class="result-value">-</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Перепад давления (ΔP)</span>
-                        <span id="pressure-result" class="result-value">-</span>
+                        <span class="result-label">β кровли</span>
+                        <span id="betaRoof" class="result-value">-</span>
                     </div>
                 </div>
+                <div class="result-final" id="resultTotal">Общий коэффициент β = ... ч</div>
             </div>
         </div>
     </div>
-
     <script>
-        // Свойства жидкостей в зависимости от температуры
-        const fluidProperties = {
-            water: {
-                getProperties: function(temp) {
-                    // Аппроксимация свойств воды в диапазоне 0-100°C
-                    const density = 1000 * (1 - (temp - 4) * (temp - 4) / 800000);
-                    const viscosity = 1.79e-6 * Math.exp(-0.024 * temp);
-                    return {
-                        density: parseFloat(density.toFixed(1)),
-                        viscosity: parseFloat(viscosity.toFixed(8))
-                    };
-                }
+        const materials = {
+            gazobeton: {
+                density: 600,
+                heatCapacity: 1000,
+                thickness: 0.30,
+                conductivity: 0.12,
+                ref: "Газобетон D600: 600 кг/м³, 1000 Дж/(кг·°C), λ=0.12 Вт/(м·°C)"
             },
-            glycol30: {
-                getProperties: function(temp) {
-                    // Приблизительные свойства 30% гликоля
-                    const density = 1058 - 0.3 * temp;
-                    const viscosity = 4.5e-6 * Math.exp(-0.02 * temp);
-                    return {
-                        density: parseFloat(density.toFixed(1)),
-                        viscosity: parseFloat(viscosity.toFixed(8))
-                    };
-                }
+            kirpich: {
+                density: 1800,
+                heatCapacity: 880,
+                thickness: 0.25,
+                conductivity: 0.81,
+                ref: "Кирпич полнотелый: 1800 кг/м³, 880 Дж/(кг·°C), λ=0.81 Вт/(м·°C)"
             },
-            glycol50: {
-                getProperties: function(temp) {
-                    // Приблизительные свойства 50% гликоля
-                    const density = 1088 - 0.35 * temp;
-                    const viscosity = 8.0e-6 * Math.exp(-0.025 * temp);
-                    return {
-                        density: parseFloat(density.toFixed(1)),
-                        viscosity: parseFloat(viscosity.toFixed(8))
-                    };
-                }
+            derevo: {
+                density: 500,
+                heatCapacity: 2100,
+                thickness: 0.15,
+                conductivity: 0.13,
+                ref: "Дерево (сосна, сух.): 500 кг/м³, 2100 Дж/(кг·°C), λ=0.13 Вт/(м·°C)"
+            },
+            karkas: {
+                density: 40,
+                heatCapacity: 850,
+                conductivity: 0.037,
+                ref: "Каркасная стена (минвата): 40 кг/м³, 850 Дж/(кг·°C), λ=0.037 Вт/(м·°C)"
             }
         };
 
-        // Шероховатость материалов труб (в метрах)
-        const pipeMaterials = {
-            ppr: 0.000007,      // Полипропилен
-            copper: 0.0000015,   // Медь
-            stainless: 0.000045, // Нержавеющая сталь
-            metalplastic: 0.000007, // Металлопластик
-            pex: 0.000007       // Сшитый полиэтилен
-        };
+        // Стена
+        const material = document.getElementById('material');
+        const density = document.getElementById('density');
+        const heatCapacity = document.getElementById('heatCapacity');
+        const thickness = document.getElementById('thickness');
+        const conductivity = document.getElementById('conductivity');
+        const glazing = document.getElementById('glazing');
+        const ref = document.getElementById('ref');
+        const frameThicknessGroup = document.getElementById('frameThicknessGroup');
+        const frameThicknessSelect = document.getElementById('frameThicknessSelect');
+        const areaWall = document.getElementById('areaWall');
+        // Бетонная плита
+        const slabDensity = document.getElementById('slabDensity');
+        const slabHeatCapacity = document.getElementById('slabHeatCapacity');
+        const slabThickness = document.getElementById('slabThickness');
+        const slabConductivity = document.getElementById('slabConductivity');
+        const areaSlab = document.getElementById('areaSlab');
+        // Кровля с утеплителем
+        const roofDensity = document.getElementById('roofDensity');
+        const roofHeatCapacity = document.getElementById('roofHeatCapacity');
+        const roofConductivity = document.getElementById('roofConductivity');
+        const roofThickness = document.getElementById('roofThickness');
+        const roofThicknessSelect = document.getElementById('roofThicknessSelect');
+        const areaRoof = document.getElementById('areaRoof');
 
-        // Получаем элементы DOM
-        const pipeMaterialSelect = document.getElementById('pipe-material');
-        const fluidSelect = document.getElementById('fluid');
-        const temperatureInput = document.getElementById('temperature');
-        const densityDisplay = document.getElementById('density-display');
-        const viscosityDisplay = document.getElementById('viscosity-display');
-        const flowRateInput = document.getElementById('flow-rate');
-        const flowUnitSelect = document.getElementById('flow-unit');
-        const diameterInput = document.getElementById('diameter');
-        const lengthInput = document.getElementById('length');
-        
-        // Элементы результатов
-        const velocityResult = document.getElementById('velocity-result');
-        const reynoldsResult = document.getElementById('reynolds-result');
-        const frictionResult = document.getElementById('friction-result');
-        const headlossResult = document.getElementById('headloss-result');
-        const pressureResult = document.getElementById('pressure-result');
+        const betaWallRes = document.getElementById('betaWall');
+        const betaSlabRes = document.getElementById('betaSlab');
+        const betaRoofRes = document.getElementById('betaRoof');
+        const resultTotal = document.getElementById('resultTotal');
 
-        // Функция для форматирования числа
-        function formatNumber(num, decimals = 4) {
-            if (Math.abs(num) < 0.0001) {
-                return num.toExponential(decimals);
-            }
-            return num.toLocaleString('ru-RU', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: decimals
-            });
-        }
-
-        // Обновление свойств жидкости при выборе
-        function updateFluidProperties() {
-            const fluidType = fluidSelect.value;
-            const temp = parseFloat(temperatureInput.value);
-            const properties = fluidProperties[fluidType].getProperties(temp);
-            
-            densityDisplay.textContent = `${properties.density} кг/м³`;
-            viscosityDisplay.textContent = `${properties.viscosity.toExponential(3)} м²/с`;
-            
-            calculateResistance();
-        }
-
-        // Конвертация единиц измерения
-        function convertFlowRate(value, unit) {
-            switch(unit) {
-                case 'm3h': return value / 3600; // м³/ч -> м³/с
-                case 'lmin': return value / 60000; // л/мин -> м³/с
-                default: return value; // м³/с
-            }
-        }
-
-        // Основная функция расчета
-        function calculateResistance() {
-            // Получаем текущий тип жидкости и материал трубы
-            const fluidType = fluidSelect.value;
-            const temp = parseFloat(temperatureInput.value);
-            const fluid = fluidProperties[fluidType].getProperties(temp);
-            const pipeMaterial = pipeMaterialSelect.value;
-            const Δ = pipeMaterials[pipeMaterial]; // Шероховатость
-            
-            // Получаем и конвертируем входные значения
-            const flowRate = parseFloat(flowRateInput.value);
-            const flowUnit = flowUnitSelect.value;
-            const Q = convertFlowRate(flowRate, flowUnit);
-            
-            const diameter = parseFloat(diameterInput.value) / 1000; // мм -> м
-            const length = parseFloat(lengthInput.value);
-            
-            const ρ = fluid.density;
-            const ν = fluid.viscosity;
-            
-            // Проверяем, что все поля заполнены
-            if (isNaN(Q) || isNaN(diameter) || isNaN(length)) {
-                velocityResult.textContent = '-';
-                reynoldsResult.textContent = '-';
-                frictionResult.textContent = '-';
-                headlossResult.textContent = '-';
-                pressureResult.textContent = '-';
-                return;
-            }
-            
-            // Расчет параметров
-            const A = Math.PI * diameter * diameter / 4; // Площадь сечения
-            const V = Q / A; // Скорость потока
-            const Re = V * diameter / ν; // Число Рейнольдса
-            
-            // Расчет коэффициента гидравлического трения (λ)
-            let λ;
-            
-            if (Re < 2000) {
-                // Ламинарный режим
-                λ = 64 / Re;
+        function setMaterialValues(mat) {
+            const data = materials[mat];
+            density.value = data.density;
+            heatCapacity.value = data.heatCapacity;
+            conductivity.value = data.conductivity;
+            ref.textContent = data.ref;
+            if (mat === "karkas") {
+                frameThicknessGroup.style.display = "";
+                thickness.value = frameThicknessSelect.value;
             } else {
-                // Турбулентный режим (формула Колбрука-Уайта)
-                const ε = Δ / diameter; // Относительная шероховатость
-                
-                // Начальное приближение
-                let λ0 = 0.02;
-                let λ1;
-                let error = 1;
-                const tolerance = 1e-6;
-                const maxIterations = 100;
-                let iterations = 0;
-                
-                // Итерационное решение уравнения Колбрука-Уайта
-                while (error > tolerance && iterations < maxIterations) {
-                    const sqrtλ = Math.sqrt(λ0);
-                    λ1 = 1 / Math.pow(-2 * Math.log10(ε/3.7 + 2.51/(Re * sqrtλ)), 2);
-                    error = Math.abs(λ1 - λ0);
-                    λ0 = λ1;
-                    iterations++;
-                }
-                
-                λ = λ0;
+                frameThicknessGroup.style.display = "none";
+                thickness.value = data.thickness;
             }
-            
-            // Расчет потерь напора
-            const hf = λ * length * V * V / (diameter * 2 * 9.81);
-            
-            // Расчет перепада давления
-            const ΔP = hf * ρ * 9.81;
-            
-            // Обновляем результаты
-            velocityResult.textContent = `${formatNumber(V, 4)} м/с`;
-            reynoldsResult.textContent = formatNumber(Re, 2);
-            frictionResult.textContent = formatNumber(λ, 6);
-            headlossResult.textContent = `${formatNumber(hf, 4)} м`;
-            pressureResult.textContent = `${formatNumber(ΔP, 2)} Па (${formatNumber(ΔP / 100000, 5)} бар)`;
         }
 
-        // Добавляем обработчики событий
-        pipeMaterialSelect.addEventListener('change', calculateResistance);
-        fluidSelect.addEventListener('change', updateFluidProperties);
-        temperatureInput.addEventListener('input', updateFluidProperties);
-        flowRateInput.addEventListener('input', calculateResistance);
-        flowUnitSelect.addEventListener('change', calculateResistance);
-        diameterInput.addEventListener('input', calculateResistance);
-        lengthInput.addEventListener('input', calculateResistance);
+        function calcBeta(c, rho, d, lambda, glazingCoef = 1) {
+            if ([c, rho, d, lambda].every(x => !isNaN(x) && x > 0)) {
+                const beta_seconds = (c * rho * d) / lambda;
+                return (beta_seconds / 3600) * glazingCoef;
+            }
+            return null;
+        }
 
-        // Инициализация при загрузке
-        window.addEventListener('load', function() {
-            updateFluidProperties();
-            calculateResistance();
+        function updateResult() {
+            // Стена
+            const rho = parseFloat(density.value);
+            const c = parseFloat(heatCapacity.value);
+            const d = parseFloat(thickness.value);
+            const lambda = parseFloat(conductivity.value);
+            const glazingCoef = parseFloat(glazing.value);
+            const S_wall = parseFloat(areaWall.value);
+            // Плита
+            const srho = parseFloat(slabDensity.value);
+            const sc = parseFloat(slabHeatCapacity.value);
+            const sd = parseFloat(slabThickness.value);
+            const slambda = parseFloat(slabConductivity.value);
+            const S_slab = parseFloat(areaSlab.value);
+            // Кровля
+            const rrho = parseFloat(roofDensity.value);
+            const rc = parseFloat(roofHeatCapacity.value);
+            const rd = parseFloat(roofThickness.value);
+            const rlambda = parseFloat(roofConductivity.value);
+            const S_roof = parseFloat(areaRoof.value);
+
+            const betaWall = calcBeta(c, rho, d, lambda, glazingCoef);
+            const betaSlab = calcBeta(sc, srho, sd, slambda);
+            const betaRoof = calcBeta(rc, rrho, rd, rlambda);
+
+            betaWallRes.textContent = betaWall !== null ? betaWall.toFixed(2) + " ч" : "-";
+            betaSlabRes.textContent = betaSlab !== null ? betaSlab.toFixed(2) + " ч" : "-";
+            betaRoofRes.textContent = betaRoof !== null ? betaRoof.toFixed(2) + " ч" : "-";
+
+            // Общий β с учетом площадей
+            if (betaWall !== null && betaSlab !== null && betaRoof !== null &&
+                !isNaN(S_wall) && !isNaN(S_slab) && !isNaN(S_roof) &&
+                S_wall > 0 && S_slab > 0 && S_roof > 0) {
+                const betaTotal = (
+                    (betaWall * S_wall) +
+                    (betaSlab * S_slab) +
+                    (betaRoof * S_roof)
+                ) / (S_wall + S_slab + S_roof);
+                resultTotal.innerHTML = `Общий коэффициент β = <b>${betaTotal.toFixed(2)} ч</b>`;
+            } else {
+                resultTotal.innerHTML = `Общий коэффициент β = ... ч`;
+            }
+        }
+
+        material.addEventListener('change', function() {
+            setMaterialValues(this.value);
+            updateResult();
         });
+
+        frameThicknessSelect.addEventListener('change', function() {
+            thickness.value = this.value;
+            updateResult();
+        });
+
+        roofThicknessSelect.addEventListener('change', function() {
+            roofThickness.value = this.value;
+            updateResult();
+        });
+
+        [
+            density, heatCapacity, thickness, conductivity, glazing, areaWall,
+            slabDensity, slabHeatCapacity, slabThickness, slabConductivity, areaSlab,
+            roofDensity, roofHeatCapacity, roofConductivity, roofThickness, areaRoof
+        ].forEach(input => {
+            input.addEventListener('input', updateResult);
+            input.addEventListener('change', updateResult);
+        });
+
+        setMaterialValues(material.value);
+        updateResult();
     </script>
 </body>
 </html>
